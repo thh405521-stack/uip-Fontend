@@ -1,0 +1,139 @@
+/**
+ * Component: SQL Query Builder layout + mobile step-wizard
+ * Status: Active — Mobile Re-Architecture (item 5, Data Analysis Portal)
+ *
+ * `.uip-qb-layout` had NO rule anywhere in the codebase before this file —
+ * the rail and main column were rendering as plain stacked blocks even on
+ * desktop. This file (a) gives desktop the intended rail+main side-by-side
+ * layout the query-builder/index.php comments already describe, and
+ * (b) recomposes the same markup into an explicit 3-step wizard on mobile
+ * (Source -> Compose -> Results) instead of one long stack of three heavy
+ * sections — per MASTER_PROMPT.md's "no accidental side-by-side columns
+ * on mobile" rule and MOBILE_REARCHITECTURE_ROADMAP.md item 5.
+ *
+ * Desktop is 100% unchanged in spirit from the original markup's intent:
+ * rail permanently visible, both cards stacked in the main column, no
+ * wizard chrome rendered at all.
+ * @package UIP
+ */
+
+.uip-qb-layout {
+  --qb-rail-w: 300px;
+  display: grid;
+  grid-template-columns: var(--qb-rail-w) 1fr;
+  gap: var(--space-4, 16px);
+  align-items: start;
+}
+
+.uip-qb-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  min-width: 0;
+}
+
+/* Wizard chrome (step pills + Back/Next bar) only exists for ≤900px —
+   completely absent from desktop rendering, not just visually hidden. */
+.uip-qb-steps,
+.uip-qb-wizard-nav {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .uip-qb-layout {
+    display: block;
+  }
+
+  /* ---- Step pill nav -------------------------------------------------- */
+  .uip-qb-steps {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    margin-bottom: var(--space-4, 16px);
+  }
+  .uip-qb-steps::-webkit-scrollbar { display: none; }
+
+  .uip-qb-step-pill {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--radius-full, 999px);
+    border: 1px solid var(--border-subtle, rgba(0, 0, 0, .12));
+    background: var(--glass-bg, rgba(255, 255, 255, .6));
+    font-size: var(--text-caption-size, .8rem);
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    cursor: pointer;
+    min-height: var(--tap-target-min, 44px);
+  }
+  .uip-qb-step-pill__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--border-subtle, rgba(0, 0, 0, .12));
+    font-size: 11px;
+    line-height: 1;
+    color: inherit;
+  }
+  .uip-qb-step-pill.is-active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+  .uip-qb-step-pill.is-active .uip-qb-step-pill__num {
+    background: rgba(255, 255, 255, .28);
+    color: #fff;
+  }
+  .uip-qb-step-pill.is-done .uip-qb-step-pill__num {
+    background: var(--color-success, #2fbf71);
+    color: #fff;
+  }
+
+  /* ---- Step panels: only the active one renders ------------------------ */
+  [data-qb-step] { display: none; }
+  [data-qb-step].is-active { display: block; }
+
+  /* ---- Back / Next bar --------------------------------------------------*/
+  .uip-qb-wizard-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2, 8px);
+    margin-top: var(--space-4, 16px);
+  }
+  .uip-qb-wizard-nav button {
+    min-height: var(--tap-target-min, 44px);
+  }
+
+  /* The results table can be wide — let it scroll within its own step
+     instead of forcing page-level horizontal overflow. */
+  #uip-qb-results-wrap {
+    max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Results grid extra polish: the actual squeeze/letter-stacking bug (table
+   forced to width:100% + inherited overflow-wrap:anywhere) is fixed
+   site-wide now in components/tables.css (.table-responsive / .data-table)
+   — that was never mobile-specific, so it's fixed at the shared component
+   level, not duplicated here. This table already gets that fix for free
+   since it also uses class="data-table". The one thing still specific to
+   THIS table: SQL results can contain arbitrarily long free-text values
+   (unlike most other tables in the app, which show short known fields), so
+   cap how wide any single cell can get and show the full value on hover/
+   tap via the `title` attribute set in renderResults() below. ------------ */
+#uip-qb-results-table td {
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,28 @@
+// Auto-extracted from api/app/Views/data-analysis/dashboard.php ($locale === 'ar' ? AR : EN pairs).
+// Shape matches useTranslations(dict) in context/LanguageContext.jsx.
+export default {
+  'All Exports': 'كل عمليات التصدير',
+  'Data Analysis Dashboard': 'لوحة تحليل البيانات',
+  'Default': 'افتراضي',
+  'Export Data': 'تصدير البيانات',
+  'Growth Trends (30 days)': 'اتجاهات النمو (٣٠ يوماً)',
+  'Manage Dashboards': 'إدارة اللوحات',
+  'My Saved Dashboards': 'لوحاتي المحفوظة',
+  'New': 'جديد',
+  'New User Growth per Month': 'نمو المستخدمين الجدد شهرياً',
+  'No exports yet.': 'لا توجد عمليات تصدير بعد.',
+  'No projects submitted yet.': 'لا توجد مشاريع منشورة بعد.',
+  'No projects yet.': 'لا توجد مشاريع بعد.',
+  'No saved dashboards yet.': 'لا توجد لوحات محفوظة بعد.',
+  'No users yet.': 'لا يوجد مستخدمون بعد.',
+  'Not enough data yet to compute trends.': 'لا توجد بيانات كافية بعد لحساب الاتجاهات.',
+  'Not enough data yet.': 'لا توجد بيانات كافية بعد.',
+  'Project Distribution by Category': 'توزيع المشاريع حسب المجال',
+  'Recent Exports': 'أحدث عمليات التصدير',
+  'Segments': 'التقسيمات',
+  'Submissions vs. the prior 30-day period, by category.': 'مقارنة عدد المشاريع المُقدَّمة مقابل الفترة السابقة، حسب المجال.',
+  'Universities Ranked by Project Volume': 'ترتيب الجامعات حسب عدد المشاريع',
+  'University Growth Map': 'خريطة نمو الجامعات',
+  'Users by Role': 'المستخدمون حسب الدور',
+  'vs': 'مقابل',
+};

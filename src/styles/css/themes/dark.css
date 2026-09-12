@@ -1,0 +1,26 @@
+/* themes/dark.css — Dark mode surface & glass mapping */
+[data-theme="dark"] {
+  --bg-canvas: var(--uip-navy-950);
+  --bg-surface: var(--uip-navy-900);
+  --text-primary: #F3F5FA;
+  --text-secondary: var(--uip-slate-300);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+
+  /* Dark-mode accent: teal instead of the light-mode indigo — matches the
+     Security Portal reference (active nav, avatar, primary buttons, focus
+     rings, badges, notification link, etc. all read this token). */
+  --color-primary: var(--uip-teal-500);
+  --color-primary-hover: var(--uip-teal-600);
+  --color-primary-rgb: 33, 212, 166; /* rgb of --uip-teal-500, for the tints/glows below */
+}
+
+/* Ambient mesh-gradient canvas (dark mode only) — sits behind glass panels */
+[data-theme="dark"] body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(var(--color-primary-rgb), 0.20), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(33, 212, 166, 0.18), transparent 60%),
+    var(--bg-canvas);
+}
